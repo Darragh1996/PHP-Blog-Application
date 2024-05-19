@@ -25,7 +25,8 @@ class User extends Database
             $stmt->bindParam(":id", $this->id);
 
             if ($stmt->execute()) {
-                return true;
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                return $row; // Return the fetched row
             }
             return false;
         } catch (PDOException $e) {

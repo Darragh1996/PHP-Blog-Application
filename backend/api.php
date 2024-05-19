@@ -15,9 +15,17 @@ $path = $segments[0];
 
 switch ($path) {
     case 'users':
+        $userObj = new User();
         switch ($method) {
+            case 'GET':
+                if (count($segments) == 1) {
+                } else if (count($segments) == 2) {
+                    $userID = $segments[1];
+                    geUserByID($userObj, $userID);
+                }
+                break;
             case 'POST':
-                createUser(new User());
+                createUser($userObj);
                 break;
             default:
                 # code...
@@ -29,6 +37,21 @@ switch ($path) {
     default:
         # code...
         break;
+}
+
+function geUserByID($user, $userID)
+{
+    $user->id = $userID;
+
+    $userData = $user->get();
+
+    if ($userData) {
+        http_response_code(200);
+        echo json_encode($userData); // Return the user data as JSON
+    } else {
+        http_response_code(503);
+        echo json_encode(array("message" => "Unable to find user with id = $userID."));
+    }
 }
 
 function createUser($user)
