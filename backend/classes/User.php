@@ -13,8 +13,25 @@ class User extends Database
         parent::__construct();
     }
 
-    // get single user
-    public function get()
+    // get all users
+    public function getAll()
+    {
+        try {
+            $query = "SELECT * FROM users";
+            $stmt = $this->conn->query($query);
+
+            if ($stmt->execute()) {
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return $rows; // Return all fetched rows
+            }
+            return false;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    // get single user by user id
+    public function getByID()
     {
         try {
             $query = "SELECT * FROM users WHERE id = :id";

@@ -19,6 +19,7 @@ switch ($path) {
         switch ($method) {
             case 'GET':
                 if (count($segments) == 1) {
+                    geAllUsers($userObj);
                 } else if (count($segments) == 2) {
                     $userID = $segments[1];
                     geUserByID($userObj, $userID);
@@ -39,11 +40,24 @@ switch ($path) {
         break;
 }
 
+function geAllUsers($user)
+{
+    $userData = $user->getAll();
+
+    if ($userData) {
+        http_response_code(200);
+        echo json_encode($userData); // Return the user data as JSON
+    } else {
+        http_response_code(503);
+        echo json_encode(array("message" => "Unable to get users."));
+    }
+}
+
 function geUserByID($user, $userID)
 {
     $user->id = $userID;
 
-    $userData = $user->get();
+    $userData = $user->getByID();
 
     if ($userData) {
         http_response_code(200);
