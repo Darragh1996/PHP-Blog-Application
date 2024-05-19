@@ -37,6 +37,8 @@ switch ($path) {
                     createUser($userObj);
                 } else if (count($segments) == 2 && $segments[1] == 'login') {
                     loginUser($userObj);
+                } else if (count($segments) == 2 && $segments[1] == 'logout') {
+                    logoutUser();
                 }
                 break;
             default:
@@ -131,4 +133,28 @@ function loginUser($user)
         http_response_code(400); // Bad Request
         echo json_encode(array("message" => "Unable to login. Data is incomplete."));
     }
+}
+
+function logoutUser()
+{
+    // remove session data
+    $_SESSION = array();
+
+    // Destroy the session
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            '',
+            time() - 50000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
+        );
+    }
+
+    session_destroy();
+    http_response_code(200);
+    echo json_encode(array("message" => "Successfully logged out."));
 }
