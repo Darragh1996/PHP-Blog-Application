@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once './classes/User.php';
 
 header("Access-Control-Allow-Origin: *");
@@ -113,6 +115,7 @@ function loginUser($user)
         $loginResult = $user->login($username, $password);
 
         if ($loginResult['status'] === 'success') {
+            $_SESSION['user_id'] = $loginResult['user']['id'];
             http_response_code(200); // OK
             echo json_encode($loginResult['user']); // Return user data
         } else {
