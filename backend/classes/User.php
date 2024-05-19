@@ -13,6 +13,26 @@ class User extends Database
         parent::__construct();
     }
 
+    // get single user
+    public function get()
+    {
+        try {
+            $query = "SELECT * FROM users WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+
+            // prevent SQL injection -> input values treated as data
+            // and not executable SQL
+            $stmt->bindParam(":id", $this->id);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
     public function add()
     {
         try {
