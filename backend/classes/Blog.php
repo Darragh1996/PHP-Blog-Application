@@ -72,4 +72,26 @@ class Blog extends Database
             echo 'Error: ' . $e->getMessage();
         }
     }
+
+    // add a new blog 
+    public function update()
+    {
+        try {
+            $query = "UPDATE blogs SET text = :text WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+
+            // prevent SQL injection -> input values treated as data
+            // and not executable SQL
+            $stmt->bindParam(":text", $this->text);
+            $stmt->bindParam(":id", $this->id);
+
+
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 }
