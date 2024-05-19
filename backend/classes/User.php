@@ -51,6 +51,7 @@ class User extends Database
         }
     }
 
+    // add a new user / register
     public function add()
     {
         try {
@@ -80,6 +81,40 @@ class User extends Database
             return false;
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function login($username, $password)
+    {
+        try {
+            $query = "SELECT * FROM users WHERE username = :username";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":username", $username);
+
+            if ($stmt->execute()) {
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($user && password_verify($password, $user['hashed_password'])) {
+                    // Password is correct
+                    return [
+                        'status' => 'success',
+                        'message' => 'Login successful',
+                        'user' => $user
+                    ];
+                } else {
+                    // Incorrect password or user not found
+                    return [
+                        'status' => 'error',
+                        'message' => 'Invalid username or password'
+                    ];
+                }
+            }
+            return false;
+        } catch (PDOException $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Error: ' . $e->getMessage()
+            ];
         }
     }
 }

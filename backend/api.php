@@ -26,7 +26,11 @@ switch ($path) {
                 }
                 break;
             case 'POST':
-                createUser($userObj);
+                if (count($segments) == 1) {
+                    createUser($userObj);
+                } else if (count($segments) == 2 && $segments[1] == 'login') {
+                    loginUser($userObj);
+                }
                 break;
             default:
                 # code...
@@ -92,5 +96,31 @@ function createUser($user)
     } else {
         http_response_code(400);
         echo json_encode(array("message" => "Unable to create user. Data is incomplete."));
+    }
+}
+
+function loginUser($user)
+{
+    $data = json_decode(file_get_contents("php://input"));
+
+    if (
+        !empty($data->username) &&
+        !empty($data->password)
+    ) {
+        $username = $data->username;
+        $password = $data->password;
+
+        $loginResult = $user->login($username, $password);
+
+        if ($loginResult['status'] === 'success') {
+            http_response_code(200); // OK
+            echo json_encode($loginResult['user']); // Return user data
+        } else {
+            http_response_code(401); // Unauthorized
+            echo json_encode(array("message" => $loginResult['message']));
+        }
+    } else {
+        http_response_code(400); // Bad Request
+        echo json_encode(array("message" => "Unable to login. Data is incomplete."));
     }
 }
