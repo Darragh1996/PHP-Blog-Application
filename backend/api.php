@@ -51,7 +51,7 @@ switch ($path) {
         $blogObj = new Blog();
         switch ($method) {
             case 'GET':
-                # code...
+                getAllBlogs($blogObj);
                 break;
             case 'POST':
                 createBlog($blogObj);
@@ -175,6 +175,19 @@ function logoutUser()
 }
 
 // handle blogs
+
+function getAllBlogs($blog)
+{
+    $blogsData = $blog->getAll();
+
+    if ($blogsData) {
+        http_response_code(200);
+        echo json_encode($blogsData); // Return the user data as JSON
+    } else {
+        http_response_code(503);
+        echo json_encode(array("message" => "Unable to get blogs."));
+    }
+}
 
 function createBlog($blog)
 {
