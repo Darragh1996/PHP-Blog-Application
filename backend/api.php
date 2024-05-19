@@ -16,7 +16,7 @@ $segments = explode('/', trim($endpoint, '/')); // split the url itno segments o
 $path = $segments[0];
 
 switch ($path) {
-    case 'users':
+    case 'users': // handle users endpoints
         $userObj = new User();
         switch ($method) {
             case 'GET':
@@ -39,7 +39,7 @@ switch ($path) {
                 break;
         }
         break;
-    case 'blogs':
+    case 'blogs': // handle blogs endpoints
         break;
     default:
         # code...
