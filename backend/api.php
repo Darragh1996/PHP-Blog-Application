@@ -7,6 +7,7 @@ session_start();
 session_regenerate_id(true); // prevent session fixations attacks
 
 require_once './classes/User.php';
+require_once './classes/Blog.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -47,11 +48,25 @@ switch ($path) {
         }
         break;
     case 'blogs': // handle blogs endpoints
+        $blogObj = new Blog();
+        switch ($method) {
+            case 'GET':
+                # code...
+                break;
+            case 'POST':
+                createBlog($blogObj);
+                break;
+            default:
+                # code...
+                break;
+        }
         break;
     default:
         # code...
         break;
 }
+
+// handle users
 
 function geAllUsers($user)
 {
@@ -157,4 +172,45 @@ function logoutUser()
     session_destroy();
     http_response_code(200);
     echo json_encode(array("message" => "Successfully logged out."));
+}
+
+// handle blogs
+
+function createBlog($blog)
+{
+    // Check if the user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        http_response_code(401); // Unauthorized
+        echo json_encode(array("message" => "You must be logged in to create a blog."));
+        return;
+    }
+
+    $data = json_decode(file_get_contents("php://input"));
+
+    if (
+        !empty($data->user_id) &&
+        !empty($data->text)
+
+    ) {
+        // Check if the user_id in the request matches the logged-in user
+        if ($data->user_id != $_SESSION['user_id']) {
+            http_response_code(403); // Forbidden
+            echo json_encode(array("message" => "You can only create blogs for your own account."));
+            return;
+        }
+
+        $blog->user_id = $data->user_id;
+        $blog->text = $data->text;
+
+        if ($blog->add()) {
+            http_response_code(201);
+            echo json_encode(array("message" => "Blog was created."));
+        } else {
+            http_response_code(503);
+            echo json_encode(array("message" => "Unable to create blog."));
+        }
+    } else {
+        http_response_code(400);
+        echo json_encode(array("message" => "Unable to create blog. Data is incomplete."));
+    }
 }
