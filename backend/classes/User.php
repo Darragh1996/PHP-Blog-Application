@@ -29,6 +29,8 @@ class User extends Database
             // echo "Hashed password: " . $this->password . "\n";
             // echo "Length: " . strlen($this->password);
 
+            // prevent SQL injection -> input values treated as data
+            // and not executable SQL
             $stmt->bindParam(":username", $this->username);
             $stmt->bindParam(":email", $this->email);
             $stmt->bindParam(":password", $this->password);
