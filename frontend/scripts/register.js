@@ -39,12 +39,21 @@ $(document).ready(() => {
       let message = "";
       if (e.target.value.length <= 7) {
         message = "Password must be at least 7 characters long.";
-      } else if (!/^(?=.*[0-9])(?=.*[\W_]).+$/.test(e.target.value)) {
-        // checks that the password has at least 1 number and 1 special character
+      } else if (
+        !/^(?=.*[0-9])(?=.*[\W_]).+$/.test(e.target.value) // checks that the password has at least 1 number and 1 special character
+      ) {
         message =
           "Password must have at least 1 number and 1 special character.";
       }
       $("#passwordMessage").text(message);
+    } else if (e.target.id == "email") {
+      let message = "";
+      if (
+        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(e.target.value) // checks that the input entered resembles an email address
+      ) {
+        message = "Not a valid email address.";
+      }
+      $("#emailMessage").text(message);
     }
   });
 });
