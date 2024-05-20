@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../scripts/register.js"></script>
+    <title>Blog Application - Register</title>
+    <link rel="stylesheet" href="../styles/register.css">
+</head>
+
+<body>
+    <h2>Register</h2>
+
+    <form id="registerForm">
+        <div class="container">
+            <label for="username">Username</label>
+            <input type="text" placeholder="Enter Username" id="username" name="username" required>
+            <div id="usernameMessage"></div>
+
+            <label for="email">Email</label>
+            <input type="text" placeholder="Enter Email" id="email" name="email" required>
+            <div id="emailMessage"></div>
+
+
+            <label for="password">Password</label>
+            <input type="password" placeholder="Enter Password" id="password" name="password" required>
+            <div id="passwordMessage"></div>
+
+            <button type="submit">Register</button>
+        </div>
+        <p id="loginText">Already have an account? <a href="./index.html" class="link">Login here.</a></p>
+    </form>
+</body>
+
+</html>
