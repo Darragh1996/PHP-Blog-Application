@@ -15,6 +15,11 @@ header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 $method = $_SERVER['REQUEST_METHOD']; // get the request type
 $endpoint = $_SERVER['PATH_INFO']; // get the url
 $segments = explode('/', trim($endpoint, '/')); // split the url itno segments on '/'
