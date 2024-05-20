@@ -30,9 +30,10 @@ class Blog extends Database
         }
     }
 
-    // get single blog by user id
+    // get single blog by blog id
     public function getByID()
     {
+        // echo $this->id;
         try {
             $query = "SELECT * FROM blogs WHERE id = :id";
             $stmt = $this->conn->prepare($query);

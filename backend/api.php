@@ -51,7 +51,13 @@ switch ($path) {
         $blogObj = new Blog();
         switch ($method) {
             case 'GET':
-                getAllBlogs($blogObj);
+                if (count($segments) == 1) {
+                    getAllBlogs($blogObj);
+                } else if (count($segments) == 2) {
+                    $blogID = (int)$segments[1];
+                    $blogObj->id = $blogID;
+                    getBlogByID($blogObj);
+                }
                 break;
             case 'POST':
                 createBlog($blogObj);
@@ -196,7 +202,20 @@ function getAllBlogs($blog)
 
     if ($blogsData) {
         http_response_code(200);
-        echo json_encode($blogsData); // Return the user data as JSON
+        echo json_encode($blogsData); // Return the blogs data as JSON
+    } else {
+        http_response_code(503);
+        echo json_encode(array("message" => "Unable to get blogs."));
+    }
+}
+
+function getBlogByID($blog)
+{
+    $blogData = $blog->getByID();
+
+    if ($blogData) {
+        http_response_code(200);
+        echo json_encode($blogData); // Return the blog data as JSON
     } else {
         http_response_code(503);
         echo json_encode(array("message" => "Unable to get blogs."));
