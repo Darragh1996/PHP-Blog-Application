@@ -63,6 +63,13 @@ switch ($path) {
                     updateBlog($blogObj);
                 }
                 break;
+            case 'DELETE':
+                if (count($segments) == 2 && (is_numeric($segments[1]))) {
+                    $blogID = $segments[1];
+                    $blogObj->id = (int)$blogID;
+                    deleteBlog($blogObj);
+                }
+                break;
             default:
                 # code...
                 break;
@@ -271,5 +278,39 @@ function updateBlog($blog)
     } else {
         http_response_code(400);
         echo json_encode(array("message" => "Unable to update blog. Data is incomplete."));
+    }
+}
+
+function deleteBlog($blog)
+{
+    // Check if the user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        http_response_code(401); // Unauthorized
+        echo json_encode(array("message" => "You must be logged in to update a blog."));
+        return;
+    }
+
+    $data = json_decode(file_get_contents("php://input"));
+
+    if (!empty($data->user_id)) {
+        // Check if the user_id in the request matches the logged-in user
+        if ($data->user_id != $_SESSION['user_id']) {
+            http_response_code(403); // Forbidden
+            echo json_encode(array("message" => "You can only update blogs for your own account."));
+            return;
+        }
+
+        $blog->user_id = $data->user_id;
+
+        if ($blog->delete()) {
+            http_response_code(201);
+            echo json_encode(array("message" => "Blog was deleted."));
+        } else {
+            http_response_code(503);
+            echo json_encode(array("message" => "Unable to delete blog."));
+        }
+    } else {
+        http_response_code(400);
+        echo json_encode(array("message" => "Unable to delete blog. Data is incomplete."));
     }
 }

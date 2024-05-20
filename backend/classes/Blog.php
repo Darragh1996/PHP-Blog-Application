@@ -95,4 +95,25 @@ class Blog extends Database
             echo 'Error: ' . $e->getMessage();
         }
     }
+
+    // update an existing blog 
+    public function delete()
+    {
+        try {
+            $query = "DELETE FROM blogs WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+
+            // prevent SQL injection -> input values treated as data
+            // and not executable SQL
+            $stmt->bindParam(":id", $this->id);
+
+
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
 }
