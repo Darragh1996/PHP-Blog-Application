@@ -11,6 +11,7 @@ h2 {
   justify-content: center;
   align-items: center;
   margin: 10vh auto;
+  color: #45a049;
 }
 
 #loginForm {
@@ -18,6 +19,7 @@ h2 {
   height: 30vh;
   margin: 22.5vh 25vw;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -67,4 +69,13 @@ button:hover {
   color: red;
   font-size: 12px;
   margin-bottom: 10px;
+}
+
+#registerText {
+  width: 50%;
+  text-align: right;
+}
+
+.link {
+  color: #45a049;
 }
