@@ -46,4 +46,20 @@ $(document).ready(() => {
       $("#passwordMessage").text(message);
     }
   });
+
+  // display pop-up message (if there is one)
+  let popUpMessage = sessionStorage.getItem("message");
+  if (popUpMessage) {
+    $("#popUpMessage").text(popUpMessage);
+    $("#popUpMessage").removeClass("hidden");
+    $("#popUpMessage").addClass("show");
+
+    setTimeout(function () {
+      $("#popUpMessage").removeClass("show");
+      setTimeout(function () {
+        $("#popUpMessage").addClass("hidden");
+      }, 500); // Match the transition duration
+    }, 3000); // Display duration
+    sessionStorage.removeItem("message");
+  }
 });

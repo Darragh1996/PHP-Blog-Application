@@ -18,6 +18,9 @@ $(document).ready(() => {
       contentType: "application/json",
       success: (res) => {
         console.log("register successful: ", res);
+        let message = "Registered successfully. You can now log-in.";
+        sessionStorage.setItem("message", message);
+        window.location.href = "./index.html";
       },
       error: (xhr, status, err) => {
         console.error("register failed: ", status, err);
