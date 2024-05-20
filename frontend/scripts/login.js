@@ -7,8 +7,10 @@ $(document).ready(() => {
       password: $("#password").val(),
     };
 
+    console.log(formData);
+
     $.ajax({
-      url: "localhost:80/PHP-Blog-Application/backend/api.php/users/login",
+      url: "http://localhost:80/PHP-Blog-Application/backend/api.php/users/login",
       type: "POST",
       data: JSON.stringify(formData),
       contentType: "application/json",
