@@ -43,7 +43,7 @@ $(document).ready(() => {
         message =
           "Password must have at least 1 number and 1 special character.";
       }
-      $("#usernameMessage").text(message);
+      $("#passwordMessage").text(message);
     }
   });
 });
