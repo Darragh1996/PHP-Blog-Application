@@ -73,9 +73,10 @@ class Blog extends Database
         }
     }
 
-    // add a new blog 
+    // update an existing blog 
     public function update()
     {
+        // echo $this->id;
         try {
             $query = "UPDATE blogs SET text = :text WHERE id = :id";
             $stmt = $this->conn->prepare($query);
