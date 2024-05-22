@@ -6,6 +6,8 @@ class Blog extends Database
     public $id;
     public $user_id;
     public $date;
+    public $edit_date;
+    public $title;
     public $text;
 
     public function __construct()
@@ -17,7 +19,8 @@ class Blog extends Database
     public function getAll()
     {
         try {
-            $query = "SELECT * FROM blogs";
+            $query = "SELECT blogs.id, blogs.user_id, blogs.date, blogs.edit_date, blogs.title, users.username 
+            FROM blogs INNER JOIN users ON blogs.user_id=users.id";
             $stmt = $this->conn->query($query);
 
             if ($stmt->execute()) {
@@ -56,12 +59,13 @@ class Blog extends Database
     public function add()
     {
         try {
-            $query = "INSERT INTO blogs (user_id, text) VALUES (:user_id, :text)";
+            $query = "INSERT INTO blogs (user_id, title, text) VALUES (:user_id, :title, :text)";
             $stmt = $this->conn->prepare($query);
 
             // prevent SQL injection -> input values treated as data
             // and not executable SQL
             $stmt->bindParam(":user_id", $this->user_id);
+            $stmt->bindParam(":title", $this->title);
             $stmt->bindParam(":text", $this->text);
 
 
