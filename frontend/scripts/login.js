@@ -17,6 +17,7 @@ $(document).ready(() => {
       contentType: "application/json",
       success: (res) => {
         console.log("login successful: ", res);
+        window.location.href = "./blogsList.html";
       },
       error: (xhr, status, err) => {
         console.error("login failed: ", status, err);
