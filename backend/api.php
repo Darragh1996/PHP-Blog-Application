@@ -325,11 +325,11 @@ function deleteBlog($blog)
 
     if (!empty($blog->user_id)) {
         // Check if the user_id in the request matches the logged-in user
-        if ($data->user_id != $_SESSION['user_id']) {
-            http_response_code(403); // Forbidden
-            echo json_encode(array("message" => "You can only delete blogs for your own account."));
-            return;
-        }
+        // if ($data->user_id != $_SESSION['user_id']) {
+        //     http_response_code(403); // Forbidden
+        //     echo json_encode(array("message" => "You can only delete blogs for your own account."));
+        //     return;
+        // }
 
         // $blog->user_id = $data->user_id;
 
