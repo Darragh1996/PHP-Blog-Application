@@ -276,23 +276,25 @@ function updateBlog($blog)
         http_response_code(401); // Unauthorized
         echo json_encode(array("message" => "You must be logged in to update a blog."));
         return;
+    } else {
+        $blog->user_id = $_SESSION['user_id'];;
     }
 
     $data = json_decode(file_get_contents("php://input"));
 
     if (
-        !empty($data->user_id) &&
+        !empty($data->title) &&
         !empty($data->text)
 
     ) {
         // Check if the user_id in the request matches the logged-in user
-        if ($data->user_id != $_SESSION['user_id']) {
-            http_response_code(403); // Forbidden
-            echo json_encode(array("message" => "You can only update blogs for your own account."));
-            return;
-        }
+        // if ($data->user_id != $_SESSION['user_id']) {
+        //     http_response_code(403); // Forbidden
+        //     echo json_encode(array("message" => "You can only update blogs for your own account."));
+        //     return;
+        // }
 
-        $blog->user_id = $data->user_id;
+        $blog->title = $data->title;
         $blog->text = $data->text;
 
         if ($blog->update()) {
