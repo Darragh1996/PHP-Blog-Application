@@ -18,11 +18,14 @@ $(document).ready(() => {
 
 let createBlogPost = (blogData) => {
   let blog = $("<div></div>");
+  blog.addClass("blogPost");
   let blogHeading = $("<div></div>");
+  blogHeading.addClass("blogHeading");
   let blogTitle = $("<h3></h3>").text(blogData.title);
   let blogAuthor = $("<p></p>").text("Author: " + blogData.username);
   blogHeading.append(blogTitle, blogAuthor);
   let blogDate = $("<p></p>").text("Posted: " + blogData.date);
+  blogDate.addClass("blogDate");
   blog.append(blogHeading, blogDate);
   $("#blogListContainer").append(blog);
 };
