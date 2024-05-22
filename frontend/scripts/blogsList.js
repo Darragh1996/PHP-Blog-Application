@@ -5,9 +5,18 @@ $(document).ready(() => {
     contentType: "application/json",
     success: (res) => {
       console.log("blogs retrieval succeeded: ", res);
+      let blogs = res;
+      for (let i = 0; i < blogs.length; i++) {
+        createBlogPost(blogs[i]);
+      }
     },
     error: (xhr, status, err) => {
       console.error("blogs retrieval failed: ", status, err);
     },
   });
 });
+
+let createBlogPost = (blogData) => {
+  let blog = $("<div></div>").text(blogData.text);
+  $("#blogListContainer").append(blog);
+};
