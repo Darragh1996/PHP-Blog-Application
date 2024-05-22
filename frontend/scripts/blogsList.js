@@ -17,6 +17,7 @@ $(document).ready(() => {
 });
 
 let createBlogPost = (blogData) => {
+  // create the html structure of a blog post
   let blog = $("<div></div>");
   blog.addClass("blogPost");
   let blogHeading = $("<div></div>");
@@ -27,5 +28,11 @@ let createBlogPost = (blogData) => {
   let blogDate = $("<p></p>").text("Posted: " + blogData.date);
   blogDate.addClass("blogDate");
   blog.append(blogHeading, blogDate);
+
+  // attach on click handler
+  blog.on("click", () => {
+    window.location.href = "./blogs.html/" + blogData.id;
+  });
+
   $("#blogListContainer").append(blog);
 };
