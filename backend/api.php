@@ -315,21 +315,23 @@ function deleteBlog($blog)
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) {
         http_response_code(401); // Unauthorized
-        echo json_encode(array("message" => "You must be logged in to update a blog."));
+        echo json_encode(array("message" => "You must be logged in to delete a blog."));
         return;
+    } else {
+        $blog->user_id = $_SESSION['user_id'];;
     }
 
     $data = json_decode(file_get_contents("php://input"));
 
-    if (!empty($data->user_id)) {
+    if (!empty($blog->user_id)) {
         // Check if the user_id in the request matches the logged-in user
         if ($data->user_id != $_SESSION['user_id']) {
             http_response_code(403); // Forbidden
-            echo json_encode(array("message" => "You can only update blogs for your own account."));
+            echo json_encode(array("message" => "You can only delete blogs for your own account."));
             return;
         }
 
-        $blog->user_id = $data->user_id;
+        // $blog->user_id = $data->user_id;
 
         if ($blog->delete()) {
             http_response_code(201);
