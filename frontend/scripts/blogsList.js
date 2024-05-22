@@ -17,6 +17,12 @@ $(document).ready(() => {
 });
 
 let createBlogPost = (blogData) => {
-  let blog = $("<div></div>").text(blogData.text);
+  let blog = $("<div></div>");
+  let blogHeading = $("<div></div>");
+  let blogTitle = $("<h3></h3>").text(blogData.title);
+  let blogAuthor = $("<p></p>").text("Author: " + blogData.username);
+  blogHeading.append(blogTitle, blogAuthor);
+  let blogDate = $("<p></p>").text("Posted: " + blogData.date);
+  blog.append(blogHeading, blogDate);
   $("#blogListContainer").append(blog);
 };
