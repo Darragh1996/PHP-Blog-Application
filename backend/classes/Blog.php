@@ -65,6 +65,7 @@ class Blog extends Database
             // prevent SQL injection -> input values treated as data
             // and not executable SQL
             $stmt->bindParam(":user_id", $this->user_id);
+            $stmt->bindParam(":edit_date", $this->edit_date);
             $stmt->bindParam(":title", $this->title);
             $stmt->bindParam(":text", $this->text);
 
@@ -83,11 +84,13 @@ class Blog extends Database
     {
         // echo $this->id;
         try {
-            $query = "UPDATE blogs SET text = :text WHERE id = :id";
+            $query = "UPDATE blogs SET edit_date = :edit_date, title = :title, text = :text WHERE id = :id";
             $stmt = $this->conn->prepare($query);
 
             // prevent SQL injection -> input values treated as data
             // and not executable SQL
+            $stmt->bindParam(":edit_date", $this->edit_date);
+            $stmt->bindParam(":title", $this->title);
             $stmt->bindParam(":text", $this->text);
             $stmt->bindParam(":id", $this->id);
 

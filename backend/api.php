@@ -277,7 +277,8 @@ function updateBlog($blog)
         echo json_encode(array("message" => "You must be logged in to update a blog."));
         return;
     } else {
-        $blog->user_id = $_SESSION['user_id'];;
+        $blog->user_id = $_SESSION['user_id'];
+        $blog->edit_date = date('Y-m-d H:i:s'); // get the current time for the edit date
     }
 
     $data = json_decode(file_get_contents("php://input"));
