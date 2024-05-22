@@ -65,7 +65,6 @@ class Blog extends Database
             // prevent SQL injection -> input values treated as data
             // and not executable SQL
             $stmt->bindParam(":user_id", $this->user_id);
-            $stmt->bindParam(":edit_date", $this->edit_date);
             $stmt->bindParam(":title", $this->title);
             $stmt->bindParam(":text", $this->text);
 
