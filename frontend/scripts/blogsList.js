@@ -31,7 +31,9 @@ let createBlogPost = (blogData) => {
 
   // attach on click handler
   blog.on("click", () => {
-    window.location.href = "./blogs.html/" + blogData.id;
+    // window.location.href = "./blogs.html/" + blogData.id;
+    history.pushState(null, null, "/frontend/blogs/" + blogData.id);
+    handleRouteChange();
   });
 
   $("#blogListContainer").append(blog);

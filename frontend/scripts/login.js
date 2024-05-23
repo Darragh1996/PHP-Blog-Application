@@ -17,7 +17,8 @@ $(document).ready(() => {
       contentType: "application/json",
       success: (res) => {
         console.log("login successful: ", res);
-        window.location.href = "./blogsList.html";
+        history.pushState(null, null, "/frontend/blogs");
+        handleRouteChange();
       },
       error: (xhr, status, err) => {
         console.error("login failed: ", status, err);
