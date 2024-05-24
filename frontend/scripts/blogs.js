@@ -9,7 +9,6 @@ $(document).ready(() => {
     contentType: "application/json",
     success: (res) => {
       let blogData = res;
-      console.log(blogData);
       $("#blogTitle").text(blogData.title);
       $("#authorUsername").text(blogData.username);
       $("#blogContents").text(blogData.text);

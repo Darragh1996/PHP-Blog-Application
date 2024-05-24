@@ -8,15 +8,12 @@ $(document).ready(() => {
       password: $("#password").val(),
     };
 
-    console.log(formData);
-
     $.ajax({
       url: "http://localhost:80/PHP-Blog-Application/backend/api.php/users/login",
       type: "POST",
       data: JSON.stringify(formData),
       contentType: "application/json",
       success: (res) => {
-        console.log("login successful: ", res);
         history.pushState(null, null, "/frontend/blogs");
         handleRouteChange();
       },

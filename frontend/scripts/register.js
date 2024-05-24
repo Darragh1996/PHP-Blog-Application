@@ -9,15 +9,12 @@ $(document).ready(() => {
       password: $("#password").val(),
     };
 
-    console.log(formData);
-
     $.ajax({
       url: "http://localhost:80/PHP-Blog-Application/backend/api.php/users",
       type: "POST",
       data: JSON.stringify(formData),
       contentType: "application/json",
       success: (res) => {
-        console.log("register successful: ", res);
         let message = "Registered successfully. You can now log-in.";
         sessionStorage.setItem("message", message);
         window.location.href = "./index.html";
