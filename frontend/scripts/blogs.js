@@ -8,11 +8,11 @@ $(document).ready(() => {
     type: "GET",
     contentType: "application/json",
     success: (res) => {
-      console.log("blogs retrieval succeeded: ", res);
-      let blogs = res;
-      for (let i = 0; i < blogs.length; i++) {
-        createBlogPost(blogs[i]);
-      }
+      let blogData = res;
+      console.log(blogData);
+      $("#blogTitle").text(blogData.title);
+      $("#authorUsername").text(blogData.username);
+      $("#blogContents").text(blogData.text);
     },
     error: (xhr, status, err) => {
       console.error("blogs retrieval failed: ", status, err);
