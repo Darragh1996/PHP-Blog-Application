@@ -38,7 +38,9 @@ class Blog extends Database
     {
         // echo $this->id;
         try {
-            $query = "SELECT * FROM blogs WHERE id = :id";
+            $query = "SELECT blogs.id, blogs.user_id, blogs.date, blogs.edit_date, blogs.title, blogs.text, users.username
+            FROM blogs INNER JOIN users ON blogs.user_id=users.id
+            WHERE blogs.id = :id";
             $stmt = $this->conn->prepare($query);
 
             // prevent SQL injection -> input values treated as data
