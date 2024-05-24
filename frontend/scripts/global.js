@@ -12,7 +12,14 @@ const createBlogPost = (blogData) => {
   blogHeading.append(blogTitle, blogAuthor);
   let blogDate = $("<p></p>").text("Posted: " + blogData.date);
   blogDate.addClass("blogDate");
-  blog.append(blogHeading, blogDate);
+  // button container
+  let buttonsContainer = $("<div></div>");
+  buttonsContainer.addClass("buttonsContainer");
+  let editButton = $("<button>Edit</button>");
+  let deleteButton = $("<button>Delete</button>");
+  buttonsContainer.append(editButton, deleteButton);
+
+  blog.append(blogHeading, blogDate, buttonsContainer);
 
   // attach on click handler
   blog.on("click", () => {
