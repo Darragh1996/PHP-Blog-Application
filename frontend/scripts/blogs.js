@@ -11,6 +11,10 @@ $(document).ready(() => {
       let blogData = res;
       $("#blogTitle").text(blogData.title);
       $("#authorUsername").text(blogData.username);
+      $("#blogDate").text(blogData.date);
+      if (blogData.edit_date) {
+        $("#blogEditDate").text(`Edited on: ${blogData.edit_date}`);
+      }
       $("#blogContents").text(blogData.text);
     },
     error: (xhr, status, err) => {
