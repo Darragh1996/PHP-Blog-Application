@@ -1,7 +1,7 @@
 const basePath = "/frontend";
 
-let loadContent = (page, callback) => {
-  return $("#app").load(`${basePath}/pages/${page}.html`, callback);
+let loadContent = (page) => {
+  $("#app").load(`${basePath}/pages/${page}.html`, callback);
 };
 
 // let loadScript = (page) => {
@@ -29,10 +29,8 @@ let loadStyle = (page) => {
 };
 
 let loadPage = (page) => {
-  loadContent(page, () => {
-    // loadScript(page);
-    loadStyle(page);
-  });
+  loadStyle(page);
+  loadContent(page);
 };
 
 let handleRouteChange = () => {
