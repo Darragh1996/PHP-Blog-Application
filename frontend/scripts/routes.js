@@ -1,7 +1,7 @@
 const basePath = "/frontend";
 
 let loadContent = (page) => {
-  $("#app").load(`${basePath}/pages/${page}.html`, callback);
+  $("#app").load(`${basePath}/pages/${page}.html`);
 };
 
 // let loadScript = (page) => {
