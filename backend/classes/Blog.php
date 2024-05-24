@@ -19,9 +19,14 @@ class Blog extends Database
     public function getAll()
     {
         try {
-            $query = "SELECT blogs.id, blogs.user_id, blogs.date, blogs.edit_date, blogs.title, users.username 
+            $query = "SELECT blogs.id, blogs.user_id, blogs.date, blogs.edit_date, blogs.title, users.username,
+            CASE WHEN blogs.user_id = :user_id THEN true ELSE false END AS is_owner
             FROM blogs INNER JOIN users ON blogs.user_id=users.id";
-            $stmt = $this->conn->query($query);
+            $stmt = $this->conn->prepare($query);
+
+            // prevent SQL injection -> input values treated as data
+            // and not executable SQL
+            $stmt->bindParam(":user_id", $this->user_id);
 
             if ($stmt->execute()) {
                 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);

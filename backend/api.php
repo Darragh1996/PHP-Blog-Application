@@ -203,6 +203,15 @@ function logoutUser()
 
 function getAllBlogs($blog)
 {
+    // Check if the user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        http_response_code(401); // Unauthorized
+        echo json_encode(array("message" => "You must be logged in to access blogs."));
+        return;
+    } else {
+        $blog->user_id = $_SESSION['user_id'];;
+    }
+
     $blogsData = $blog->getAll();
 
     if ($blogsData) {
