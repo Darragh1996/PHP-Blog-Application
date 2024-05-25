@@ -12,19 +12,26 @@ const createBlogPost = (blogData) => {
   blogHeading.append(blogTitle, blogAuthor);
   let blogDate = $("<p></p>").text("Posted: " + blogData.date);
   blogDate.addClass("blogDate");
-  // button container
-  let buttonsContainer = $("<div></div>");
-  buttonsContainer.addClass("buttonsContainer");
-  let editButton = $("<button>Edit</button>");
-  let deleteButton = $("<button>Delete</button>");
-  buttonsContainer.append(editButton, deleteButton);
+  blog.append(blogHeading, blogDate);
 
-  blog.append(blogHeading, blogDate, buttonsContainer);
+  // button container
+  if (blogData.is_owner) {
+    let buttonsContainer = $("<div></div>");
+    buttonsContainer.addClass("buttonsContainer");
+    let editButton = $("<button>Edit</button>");
+    let deleteButton = $("<button>Delete</button>");
+    buttonsContainer.append(editButton, deleteButton);
+    blog.append(buttonsContainer);
+  }
 
   // attach on click handler
   blog.on("click", () => {
     // window.location.href = "./blogs.html/" + blogData.id;
-    history.pushState(null, null, "/frontend/blogs/" + blogData.id);
+    history.pushState(
+      null,
+      null,
+      "/PHP-Blog-Application/frontend/blogs/" + blogData.id
+    );
     handleRouteChange();
   });
 
