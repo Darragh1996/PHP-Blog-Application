@@ -1,7 +1,8 @@
 <?php
 // secure and httpOnly flags
-// ini_set('session.cookie_secure', '1');
+ini_set('session.cookie_secure', '1');
 ini_set('session.cookie_httponly', '1');
+// ini_set('session.cookie_samesite', 'None');
 
 session_start();
 session_regenerate_id(true); // prevent session fixations attacks
@@ -9,8 +10,8 @@ session_regenerate_id(true); // prevent session fixations attacks
 require_once './classes/User.php';
 require_once './classes/Blog.php';
 
-header("Access-Control-Allow-Origin: *");
-// header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Origin: http://localhost");
+header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
@@ -20,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
     exit();
 }
+
 
 $method = $_SERVER['REQUEST_METHOD']; // get the request type
 $endpoint = $_SERVER['PATH_INFO']; // get the url
@@ -163,7 +165,21 @@ function loginUser($user)
         $loginResult = $user->login($username, $password);
 
         if ($loginResult['status'] === 'success') {
+            // $cookieParams = session_get_cookie_params();
+            // setcookie(
+            //     session_name(),
+            //     session_id(),
+            //     [
+            //         'expires' => $cookieParams['lifetime'] ? time() + $cookieParams['lifetime'] : 0,
+            //         'path' => $cookieParams['path'],
+            //         'domain' => $cookieParams['domain'],
+            //         'secure' => $cookieParams['secure'],
+            //         'httponly' => $cookieParams['httponly'],
+            //         'samesite' => 'None'
+            //     ]
+            // );
             $_SESSION['user_id'] = $loginResult['user']['id'];
+
             http_response_code(200); // OK
             echo json_encode($loginResult['user']); // Return user data
         } else {
@@ -204,13 +220,16 @@ function logoutUser()
 
 function getAllBlogs($blog)
 {
+    // echo $_SERVER["HTTP_COOKIE"];
+    // echo "\n";
+    // echo $_SESSION["user_id"];
     // Check if the user is logged in
     if (!isset($_SESSION['user_id'])) {
         http_response_code(401); // Unauthorized
-        echo json_encode(array("message" => "You must be logged in to access blogs."));
+        echo json_encode(array("message" => $_SERVER["HTTP_COOKIE"]));
         return;
     } else {
-        $blog->user_id = $_SESSION['user_id'];;
+        $blog->user_id = $_SESSION['user_id'];
     }
 
     $blogsData = $blog->getAll();

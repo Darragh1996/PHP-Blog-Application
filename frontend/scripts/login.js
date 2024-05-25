@@ -9,12 +9,12 @@ $(document).ready(() => {
     };
 
     $.ajax({
-      url: "http://localhost:80/PHP-Blog-Application/backend/api.php/users/login",
+      url: "http://localhost/PHP-Blog-Application/backend/api.php/users/login",
       type: "POST",
       data: JSON.stringify(formData),
       contentType: "application/json",
       success: (res) => {
-        history.pushState(null, null, "/frontend/blogs");
+        history.pushState(null, null, "/PHP-Blog-Application/frontend/blogs");
         handleRouteChange();
       },
       error: (xhr, status, err) => {

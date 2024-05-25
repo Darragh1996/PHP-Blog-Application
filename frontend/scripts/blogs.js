@@ -3,8 +3,8 @@ $(document).ready(() => {
   let segments = pathname.split("/");
 
   $.ajax({
-    // segments[2] corresponds to the blog id we're tyring to access
-    url: `http://localhost:80/PHP-Blog-Application/backend/api.php/blogs/${segments[2]}`,
+    // segments[3] corresponds to the blog id we're tyring to access
+    url: `http://localhost/PHP-Blog-Application/backend/api.php/blogs/${segments[3]}`,
     type: "GET",
     contentType: "application/json",
     success: (res) => {

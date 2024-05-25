@@ -10,7 +10,7 @@ $(document).ready(() => {
     };
 
     $.ajax({
-      url: "http://localhost:80/PHP-Blog-Application/backend/api.php/users",
+      url: "http://localhost/PHP-Blog-Application/backend/api.php/users",
       type: "POST",
       data: JSON.stringify(formData),
       contentType: "application/json",

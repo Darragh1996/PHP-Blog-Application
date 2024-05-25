@@ -1,4 +1,4 @@
-const basePath = "/frontend";
+const basePath = "/PHP-Blog-Application/frontend";
 
 let loadContent = (page) => {
   $("#app").load(`${basePath}/pages/${page}.html`);
@@ -36,11 +36,12 @@ let loadPage = (page) => {
 let handleRouteChange = () => {
   let pathname = window.location.pathname.replace(/^\/|\/$/g, "");
   let segments = pathname.split("/");
+  console.log(segments);
 
-  if (segments[0] === "frontend") {
-    switch (segments[1]) {
+  if (segments[1] === "frontend") {
+    switch (segments[2]) {
       case "blogs":
-        if (segments[2]) {
+        if (segments[3]) {
           loadPage("blogs");
         } else {
           loadPage("blogsList");
@@ -58,7 +59,7 @@ let handleRouteChange = () => {
         break;
     }
   } else {
-    console.log("Invalid path");
+    console.log("Invalid path!");
   }
 };
 
@@ -76,6 +77,7 @@ $(document).ready(() => {
   $(document).on("click", "a.link", navigate);
 
   $(window).on("popstate", handleRouteChange);
+  $(window).on("hashchange", handleRouteChange);
 
   handleRouteChange();
 });
