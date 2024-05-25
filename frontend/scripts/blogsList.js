@@ -3,6 +3,9 @@ $(document).ready(() => {
     url: "http://localhost:80/PHP-Blog-Application/backend/api.php/blogs",
     type: "GET",
     contentType: "application/json",
+    // xhrFields: {
+    //   withCredentials: true,
+    // },
     success: (res) => {
       let blogs = res;
       for (let i = 0; i < blogs.length; i++) {

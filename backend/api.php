@@ -1,6 +1,6 @@
 <?php
 // secure and httpOnly flags
-ini_set('session.cookie_secure', '1');
+// ini_set('session.cookie_secure', '1');
 ini_set('session.cookie_httponly', '1');
 
 session_start();
@@ -10,6 +10,7 @@ require_once './classes/User.php';
 require_once './classes/Blog.php';
 
 header("Access-Control-Allow-Origin: *");
+// header("Access-Control-Allow-Credentials: true");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS");
 header("Access-Control-Max-Age: 3600");
