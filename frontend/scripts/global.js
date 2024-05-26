@@ -21,6 +21,16 @@ const createBlogPost = (blogData) => {
     let editButton = $("<button>Edit</button>");
     let deleteButton = $("<button>Delete</button>");
 
+    editButton.on("click", (e) => {
+      e.stopPropagation();
+      history.pushState(
+        null,
+        null,
+        `${basePathFrontend}/blogs/${blogData.id}/edit`
+      );
+      handleRouteChange();
+    });
+
     deleteButton.on("click", (e) => {
       e.stopPropagation();
       deleteBlog(blogData.id);
