@@ -18,8 +18,10 @@ class Comment extends Database
     public function getAllByBlogID()
     {
         try {
-            $query = "SELECT comments.id, comments.user_id, comments.blog_id, comments.date, users.username,
-            FROM blogs INNER JOIN users ON comments.blog_id= :blog_id";
+            $query = "SELECT comments.id, comments.text, comments.user_id, comments.blog_id, comments.date, users.username
+            FROM comments 
+            INNER JOIN users ON comments.user_id = users.id 
+            WHERE comments.blog_id = :blog_id";
             $stmt = $this->conn->prepare($query);
 
             // prevent SQL injection -> input values treated as data
