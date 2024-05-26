@@ -1,0 +1,71 @@
+html,
+body {
+  box-sizing: border-box;
+}
+
+h2 {
+  width: 100%;
+  height: 5vh;
+  max-height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5vh auto;
+  color: #45a049;
+}
+
+#editForm {
+  width: 60vw;
+  margin: 5vh 20vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  background-color: #f6f5f5;
+}
+
+label {
+  width: 80%;
+  text-align: left;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+input[type="text"],
+textarea {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  width: 80%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}

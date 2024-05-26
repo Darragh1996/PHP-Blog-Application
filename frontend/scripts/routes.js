@@ -6,15 +6,8 @@ let loadContent = (page) => {
 };
 
 // let loadScript = (page) => {
-//   let existingScript = $("#temp-script");
-//   if (existingScript.length) {
-//     existingScript.remove();
-//   }
-//   $("<script>", {
-//     src: `./scripts/${page}.js`,
-//     id: "temp-script",
-//     load: () => console.log(`${page}.js loaded`),
-//   }).appendTo("head");
+//   let script = $(".temp-script");
+//   script.src = `${basePathFrontend}/scripts/${page}.js`;
 // };
 
 let loadStyle = (page) => {
@@ -32,17 +25,19 @@ let loadStyle = (page) => {
 let loadPage = (page) => {
   loadStyle(page);
   loadContent(page);
+  // loadScript(page);
 };
 
 let handleRouteChange = () => {
   let pathname = window.location.pathname.replace(/^\/|\/$/g, "");
   let segments = pathname.split("/");
-  console.log(segments);
 
   if (segments[1] === "frontend") {
     switch (segments[2]) {
       case "blogs":
-        if (segments[3]) {
+        if (segments.length == 5) {
+          loadPage("editBlog");
+        } else if (segments.length == 4) {
           loadPage("blogs");
         } else {
           loadPage("blogsList");
