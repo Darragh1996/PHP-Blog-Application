@@ -4,6 +4,10 @@
 
 This backend, built with PHP, provides a RESTful API for managing a blog application. The API handles user authentication, blog posts, and comments. Below are the available endpoints and their functionalities.
 
+## Quick Database Setup
+
+I have included an sql file (blog_app.sql) which can be used to quickly populate the database with data.
+
 ## API Endpoints
 
 ### Users
