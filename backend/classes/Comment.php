@@ -18,7 +18,8 @@ class Comment extends Database
     public function getAllByBlogID()
     {
         try {
-            $query = "SELECT comments.id, comments.text, comments.user_id, comments.blog_id, comments.date, users.username
+            $query = "SELECT comments.id, comments.text, comments.user_id, comments.blog_id, comments.date, users.username,
+            CASE WHEN comments.user_id = :user_id THEN true ELSE false END AS is_owner
             FROM comments 
             INNER JOIN users ON comments.user_id = users.id 
             WHERE comments.blog_id = :blog_id";
@@ -26,6 +27,7 @@ class Comment extends Database
 
             // prevent SQL injection -> input values treated as data
             // and not executable SQL
+            $stmt->bindParam(":user_id", $this->user_id);
             $stmt->bindParam(":blog_id", $this->blog_id);
 
             if ($stmt->execute()) {
