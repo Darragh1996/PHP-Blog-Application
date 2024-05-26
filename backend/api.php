@@ -9,6 +9,7 @@ session_regenerate_id(true); // prevent session fixations attacks
 
 require_once './classes/User.php';
 require_once './classes/Blog.php';
+require_once './classes/Comment.php';
 
 header("Access-Control-Allow-Origin: http://localhost");
 header("Access-Control-Allow-Credentials: true");
@@ -83,6 +84,26 @@ switch ($path) {
                     $blogObj->id = (int)$blogID;
                     deleteBlog($blogObj);
                 }
+                break;
+            default:
+                # code...
+                break;
+        }
+        break;
+    case 'comments': // handle comments endpoint
+        $commentObj = new Comment();
+        switch ($method) {
+            case 'GET':
+                $commentObj->blog_id = $segments[1];
+                getAllCommentsByBlogID($commentObj);
+                break;
+            case 'POST':
+                $commentObj->blog_id = $segments[1];
+                createComment($commentObj);
+                break;
+            case 'DELETE':
+                $commentObj->id = $segments[1];
+                deleteComment($commentObj);
                 break;
             default:
                 # code...
@@ -373,5 +394,89 @@ function deleteBlog($blog)
     } else {
         http_response_code(400);
         echo json_encode(array("message" => "Unable to delete blog. Data is incomplete."));
+    }
+}
+
+// handle comments
+
+function getAllCommentsByBlogID($comment)
+{
+    // Check if the user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        http_response_code(401); // Unauthorized
+        echo json_encode(array("message" => $_SERVER["HTTP_COOKIE"]));
+        return;
+    } else {
+        $comment->user_id = $_SESSION['user_id'];
+    }
+
+    $commentsData = $comment->getAllByBlogID();
+
+    if ($commentsData) {
+        http_response_code(200);
+        echo json_encode($commentsData); // Return the comments data as JSON
+    } else {
+        http_response_code(503);
+        echo json_encode(array("message" => "Unable to get comments."));
+    }
+}
+
+function createComment($comment)
+{
+    // Check if the user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        http_response_code(401); // Unauthorized
+        echo json_encode(array("message" => "You must be logged in to create a comment."));
+        return;
+    } else {
+        $comment->user_id = $_SESSION['user_id'];;
+    }
+
+    $data = json_decode(file_get_contents("php://input"));
+
+    if (
+        // !empty($data->user_id) &&
+        !empty($data->text)
+
+    ) {
+
+        $comment->text = $data->text;
+
+        if ($comment->add()) {
+            http_response_code(201);
+            echo json_encode(array("message" => "Comment was created."));
+        } else {
+            http_response_code(503);
+            echo json_encode(array("message" => "Unable to create comment."));
+        }
+    } else {
+        http_response_code(400);
+        echo json_encode(array("message" => "Unable to create comment. Data is incomplete."));
+    }
+}
+
+function deleteComment($comment)
+{
+    // Check if the user is logged in
+    if (!isset($_SESSION['user_id'])) {
+        http_response_code(401); // Unauthorized
+        echo json_encode(array("message" => "You must be logged in to delete a comment."));
+        return;
+    } else {
+        $comment->user_id = $_SESSION['user_id'];
+    }
+
+    if (!empty($comment->user_id)) {
+
+        if ($comment->delete()) {
+            http_response_code(201);
+            echo json_encode(array("message" => "Comment was deleted."));
+        } else {
+            http_response_code(503);
+            echo json_encode(array("message" => "Unable to delete comment."));
+        }
+    } else {
+        http_response_code(400);
+        echo json_encode(array("message" => "Unable to delete comment. Data is incomplete."));
     }
 }
