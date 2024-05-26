@@ -20,6 +20,12 @@ const createBlogPost = (blogData) => {
     buttonsContainer.addClass("buttonsContainer");
     let editButton = $("<button>Edit</button>");
     let deleteButton = $("<button>Delete</button>");
+
+    deleteButton.on("click", (e) => {
+      e.stopPropagation();
+      deleteBlog(blogData.id);
+    });
+
     buttonsContainer.append(editButton, deleteButton);
     blog.append(buttonsContainer);
   }
@@ -32,4 +38,24 @@ const createBlogPost = (blogData) => {
   });
 
   $("#blogListContainer").append(blog);
+};
+
+const deleteBlog = (blogID) => {
+  $.ajax({
+    url: `${basePathBackend}/blogs/${blogID}`,
+    type: "DELETE",
+    contentType: "application/json",
+    xhrFields: {
+      withCredentials: true,
+    },
+    success: (res) => {
+      console.log("Blog was successfully deleted.");
+      // trigger a reload of the page to remove the deleted blog
+      history.pushState(null, null, `${basePathFrontend}/blogs`);
+      handleRouteChange();
+    },
+    error: (xhr, status, err) => {
+      console.error("blogs retrieval failed: ", status, err);
+    },
+  });
 };
