@@ -1,7 +1,8 @@
-const basePath = "/PHP-Blog-Application/frontend";
+const basePathFrontend = "/PHP-Blog-Application/frontend";
+const basePathBackend = "http://localhost/PHP-Blog-Application/backend/api.php";
 
 let loadContent = (page) => {
-  $("#app").load(`${basePath}/pages/${page}.html`);
+  $("#app").load(`${basePathFrontend}/pages/${page}.html`);
 };
 
 // let loadScript = (page) => {
@@ -23,7 +24,7 @@ let loadStyle = (page) => {
   }
   $("<link>", {
     rel: "stylesheet",
-    href: `${basePath}/styles/${page}.css`,
+    href: `${basePathFrontend}/styles/${page}.css`,
     id: "temp-style",
   }).appendTo("head");
 };

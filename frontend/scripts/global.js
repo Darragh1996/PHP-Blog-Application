@@ -27,11 +27,7 @@ const createBlogPost = (blogData) => {
   // attach on click handler
   blog.on("click", () => {
     // window.location.href = "./blogs.html/" + blogData.id;
-    history.pushState(
-      null,
-      null,
-      "/PHP-Blog-Application/frontend/blogs/" + blogData.id
-    );
+    history.pushState(null, null, `${basePathFrontend}/blogs/${blogData.id}`);
     handleRouteChange();
   });
 

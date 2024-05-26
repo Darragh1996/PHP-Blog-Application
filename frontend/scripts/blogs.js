@@ -4,7 +4,7 @@ $(document).ready(() => {
 
   $.ajax({
     // segments[3] corresponds to the blog id we're tyring to access
-    url: `http://localhost/PHP-Blog-Application/backend/api.php/blogs/${segments[3]}`,
+    url: `${basePathBackend}/blogs/${segments[3]}`,
     type: "GET",
     contentType: "application/json",
     success: (res) => {

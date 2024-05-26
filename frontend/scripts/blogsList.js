@@ -1,6 +1,6 @@
 $(document).ready(() => {
   $.ajax({
-    url: "http://localhost/PHP-Blog-Application/backend/api.php/blogs",
+    url: `${basePathBackend}/blogs`,
     type: "GET",
     contentType: "application/json",
     xhrFields: {

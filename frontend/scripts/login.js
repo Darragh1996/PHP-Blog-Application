@@ -9,7 +9,7 @@ $(document).ready(() => {
     };
 
     $.ajax({
-      url: "http://localhost/PHP-Blog-Application/backend/api.php/users/login",
+      url: `${basePathBackend}/users/login`,
       type: "POST",
       data: JSON.stringify(formData),
       contentType: "application/json",
