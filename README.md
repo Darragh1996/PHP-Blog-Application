@@ -1,8 +1,8 @@
 # PHP-Blog-Application
 
-## Overview
+## Backend Overview
 
-This backend provides a RESTful API for managing a blog application. The API handles user authentication, blog posts, and comments. Below are the available endpoints and their functionalities.
+This backend, built with PHP, provides a RESTful API for managing a blog application. The API handles user authentication, blog posts, and comments. Below are the available endpoints and their functionalities.
 
 ## API Endpoints
 
@@ -27,3 +27,7 @@ This backend provides a RESTful API for managing a blog application. The API han
 - **GET /comments/{blog_id}**: Retrieve all comments for a specific blog post.
 - **POST /comments/{blog_id}**: Create a new comment for a specific blog post.
 - **DELETE /comments/{id}**: Delete a comment by its ID.
+
+## Frontend Overview
+
+The frontend portion of the site was build using HTML5, CSS3, JavaScript, adn jQuery. When initially staring the application, make sure you are in the root folder - the application won't work if it is not started from frontend/index.html
