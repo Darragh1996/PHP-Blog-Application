@@ -32,6 +32,17 @@ let handleRouteChange = () => {
   let pathname = window.location.pathname.replace(/^\/|\/$/g, "");
   let segments = pathname.split("/");
 
+  // hide the nav if we're anywhere but the login or register page
+  if (
+    pathname == `PHP-Blog-Application/frontend` ||
+    pathname == "PHP-Blog-Application/frontend/login" ||
+    pathname == "PHP-Blog-Application/frontend/register"
+  ) {
+    $("#navButtons").hide();
+  } else {
+    $("#navButtons").show();
+  }
+
   if (segments[1] === "frontend") {
     switch (segments[2]) {
       case "blogs":
@@ -64,8 +75,30 @@ let handleRouteChange = () => {
 };
 
 $(document).ready(() => {
-  let pathname = window.location.pathname.replace(/^\/|\/$/g, "");
-  console.log(pathname);
+  // let pathname = window.location.pathname.replace(/^\/|\/$/g, "");
+  // console.log(pathname);
+
+  $("#backButton").on("click", (e) => {
+    e.preventDefault();
+    history.back();
+  });
+
+  $("#logout").on("click", (e) => {
+    e.preventDefault();
+
+    $.ajax({
+      url: `${basePathBackend}/users/logout`,
+      type: "POST",
+      contentType: "application/json",
+      success: (res) => {
+        history.pushState(null, null, `${basePathFrontend}/`);
+        handleRouteChange();
+      },
+      error: (xhr, status, err) => {
+        console.error("login failed: ", status, err);
+      },
+    });
+  });
 
   let navigate = (e) => {
     e.preventDefault();

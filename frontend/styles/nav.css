@@ -1,0 +1,29 @@
+#navButtons {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+}
+
+#navButtons button {
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+#navButtons button:hover {
+  background-color: #45a049;
+}
+
+#logout {
+  background-color: #f44336;
+}
+
+#backButton {
+  background-color: #ff9800;
+}
