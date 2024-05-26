@@ -31,6 +31,7 @@ $(document).ready(() => {
     });
   });
 
+  // get the blog data by blog id
   $.ajax({
     // segments[3] corresponds to the blog id we're tyring to access
     url: `${basePathBackend}/blogs/${segments[3]}`,
@@ -45,6 +46,23 @@ $(document).ready(() => {
         $("#blogEditDate").text(`Edited on: ${blogData.edit_date}`);
       }
       $("#blogContents").text(blogData.text);
+    },
+    error: (xhr, status, err) => {
+      console.error("blogs retrieval failed: ", status, err);
+    },
+  });
+
+  // get the comments data by blog id
+  $.ajax({
+    // segments[3] corresponds to the blog id we're tyring to access
+    url: `${basePathBackend}/comments/${segments[3]}`,
+    type: "GET",
+    contentType: "application/json",
+    success: (res) => {
+      let comments = res;
+      for (let i = 0; i < comments.length; i++) {
+        createComment(comments[i]);
+      }
     },
     error: (xhr, status, err) => {
       console.error("blogs retrieval failed: ", status, err);

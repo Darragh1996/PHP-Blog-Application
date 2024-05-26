@@ -92,3 +92,38 @@ body {
 #addCommentForm button:hover {
   background-color: #45a049;
 }
+
+#commentsContainer {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.comment {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.commentHeading {
+  background-color: #e8f5e9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.commentAuthor,
+.commentDate {
+  margin: 0;
+  color: #666;
+}
+
+.commentText {
+  margin: 0;
+  color: #333;
+  line-height: 1.4;
+}

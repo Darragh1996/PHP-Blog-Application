@@ -69,3 +69,45 @@ const deleteBlog = (blogID) => {
     },
   });
 };
+
+const createComment = (commentData) => {
+  // create the html structure of a blog post
+  let comment = $("<div></div>");
+  comment.addClass("comment");
+  let commentHeading = $("<div></div>");
+  commentHeading.addClass("commentHeading");
+  let commentAuthor = $("<p></p>").text("Author: " + commentData.username);
+  let commentDate = $("<p></p>").text("Posted: " + commentData.date);
+  commentDate.addClass("commentDate");
+  commentHeading.append(commentAuthor, commentDate);
+  let commentText = $("<p></p>").text(commentData.text);
+  comment.append(commentHeading, commentText);
+
+  // button container
+  // if (blogData.is_owner) {
+  //   let buttonsContainer = $("<div></div>");
+  //   buttonsContainer.addClass("buttonsContainer");
+  //   let editButton = $("<button>Edit</button>");
+  //   let deleteButton = $("<button>Delete</button>");
+
+  //   editButton.on("click", (e) => {
+  //     e.stopPropagation();
+  //     history.pushState(
+  //       null,
+  //       null,
+  //       `${basePathFrontend}/blogs/${blogData.id}/edit`
+  //     );
+  //     handleRouteChange();
+  //   });
+
+  //   deleteButton.on("click", (e) => {
+  //     e.stopPropagation();
+  //     deleteBlog(blogData.id);
+  //   });
+
+  //   buttonsContainer.append(editButton, deleteButton);
+  //   blog.append(buttonsContainer);
+  // }
+
+  $("#commentsContainer").append(comment);
+};
