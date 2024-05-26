@@ -38,7 +38,11 @@ let handleRouteChange = () => {
         if (segments.length == 5) {
           loadPage("editBlog");
         } else if (segments.length == 4) {
-          loadPage("blogs");
+          if (segments[3] == "add") {
+            loadPage("addBlog");
+          } else {
+            loadPage("blogs");
+          }
         } else {
           loadPage("blogsList");
         }

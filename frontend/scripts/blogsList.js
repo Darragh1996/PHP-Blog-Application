@@ -1,4 +1,10 @@
 $(document).ready(() => {
+  $("#addBlog").on("click", (e) => {
+    e.stopPropagation();
+    history.pushState(null, null, `${basePathFrontend}/blogs/add`);
+    handleRouteChange();
+  });
+
   $.ajax({
     url: `${basePathBackend}/blogs`,
     type: "GET",
