@@ -84,30 +84,39 @@ const createComment = (commentData) => {
   comment.append(commentHeading, commentText);
 
   // button container
-  // if (blogData.is_owner) {
-  //   let buttonsContainer = $("<div></div>");
-  //   buttonsContainer.addClass("buttonsContainer");
-  //   let editButton = $("<button>Edit</button>");
-  //   let deleteButton = $("<button>Delete</button>");
+  if (commentData.is_owner) {
+    let buttonsContainer = $("<div></div>");
+    buttonsContainer.addClass("buttonsContainer");
+    let deleteButton = $("<button>Delete</button>");
 
-  //   editButton.on("click", (e) => {
-  //     e.stopPropagation();
-  //     history.pushState(
-  //       null,
-  //       null,
-  //       `${basePathFrontend}/blogs/${blogData.id}/edit`
-  //     );
-  //     handleRouteChange();
-  //   });
+    deleteButton.on("click", (e) => {
+      e.stopPropagation();
+      deleteComment(commentData.id, commentData.blog_id);
+    });
 
-  //   deleteButton.on("click", (e) => {
-  //     e.stopPropagation();
-  //     deleteBlog(blogData.id);
-  //   });
-
-  //   buttonsContainer.append(editButton, deleteButton);
-  //   blog.append(buttonsContainer);
-  // }
+    buttonsContainer.append(deleteButton);
+    comment.append(buttonsContainer);
+  }
 
   $("#commentsContainer").append(comment);
+};
+
+const deleteComment = (commentID, blogID) => {
+  $.ajax({
+    url: `${basePathBackend}/comments/${commentID}`,
+    type: "DELETE",
+    contentType: "application/json",
+    xhrFields: {
+      withCredentials: true,
+    },
+    success: (res) => {
+      console.log("Comment was successfully deleted.");
+      // trigger a reload of the page to remove the deleted comment
+      history.pushState(null, null, `${basePathFrontend}/blogs/${blogID}`);
+      handleRouteChange();
+    },
+    error: (xhr, status, err) => {
+      console.error("comments retrieval failed: ", status, err);
+    },
+  });
 };
